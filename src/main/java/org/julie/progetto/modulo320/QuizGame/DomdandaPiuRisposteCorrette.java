@@ -15,8 +15,9 @@ public class DomdandaPiuRisposteCorrette extends Domanda {
     @Override
     public int valuta() {
         int punteggio = 0;
-        for (String r : getRisposteDate()) {
-            for (String rC : risposteCorrette) {
+        //TODO adjust this loop it doenst work properly
+        for (String rC : risposteCorrette) {
+            for (String r : getRisposteDate()) {
                 if (r.equals(rC)) {
                     punteggio++;
                 } else {

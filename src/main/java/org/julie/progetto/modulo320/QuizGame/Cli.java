@@ -48,8 +48,22 @@ public class Cli {
                     System.out.println("Questo numero non è valido riprova");
                 }
             }
+        } else if (risposta == 2) {
+            //TODO implement logic to drop a question here
+        } else if (risposta == 3) {
+            for (Domanda d : domande) {
+                System.out.println("Ecco tutte le domande con le relative risposte: ");
+                d.visualizzaDomanda();
+            }
+        } else if (risposta == 4) {
+            int punteggioTotale = 0;
+            for (Domanda d : domande) {
+                System.out.println("Ecco la domanda: ");
+                d.visualizzaDomanda();
+                System.out.println("Risposta (se più di una separare con la virgola): ");
+                List<String> risposteDate = List.of(s.nextLine().split(", "));
+                d.setRisposteDate(risposteDate);
+            }
         }
-
-
     }
 }
