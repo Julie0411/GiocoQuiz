@@ -19,7 +19,9 @@ public class DomandaSingolaRispostaCorretta extends Domanda {
             if (r.equals(this.rispostaCorretta)) {
                 punteggio++;
             } else {
-                punteggio--;
+                if (punteggio > 0) {
+                    punteggio--;
+                }
             }
         }
         return punteggio;

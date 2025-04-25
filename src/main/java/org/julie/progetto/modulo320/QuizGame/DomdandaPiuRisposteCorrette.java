@@ -20,7 +20,9 @@ public class DomdandaPiuRisposteCorrette extends Domanda {
                 if (r.equals(rC)) {
                     punteggio++;
                 } else {
-                    punteggio--;
+                    if (punteggio > 0) {
+                        punteggio--;
+                    }
                 }
             }
         }
