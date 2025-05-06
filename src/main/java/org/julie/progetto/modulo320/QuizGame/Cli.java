@@ -18,51 +18,57 @@ public class Cli {
         System.out.println("4. Prova il quiz");
         System.out.println("5. Esci");
 
-        int risposta = s.nextInt();
-        s.nextLine();
-
-        if (risposta == 1) {
-            for (;;) {
-                Domanda d;
-                System.out.println("Scrivi la domanda: ");
-                String domanda = s.nextLine();
-                System.out.println("Scrivi due o più risposte (separa con la virgola): ");
-                String risposteUnite = s.nextLine();
-                List<String> risposte = List.of(risposteUnite.split(", "));
-                System.out.println("Quante sono le risposte corrette: ");
-                int nuemroRisposteCorrette = s.nextInt();
-                s.nextLine();
-                if (nuemroRisposteCorrette == 1) {
-                    System.out.println("Scrivi la risposta corretta: ");
-                    String rispostaCorretta = s.nextLine();
-                    d = new DomandaSingolaRispostaCorretta(domanda, risposte, rispostaCorretta);
-                    domande.add(d);
-                    break;
-                } else if (nuemroRisposteCorrette > 1) {
-                    System.out.println("Scrivi le risposte corrette (separa con la virgola): ");
-                    List<String> risposteCorrette = List.of(s.nextLine().split(", "));
-                    d = new DomdandaPiuRisposteCorrette(domanda, risposte, risposteCorrette);
-                    domande.add(d);
-                    break;
-                } else {
-                    System.out.println("Questo numero non è valido riprova");
+        for (;;) {
+            int risposta = s.nextInt();
+            s.nextLine();
+            if (risposta == 1) {
+                for (;;) {
+                    Domanda d;
+                    System.out.println("Scrivi la domanda: ");
+                    String domanda = s.nextLine();
+                    System.out.println("Scrivi due o più risposte (separa con la virgola): ");
+                    String risposteUnite = s.nextLine();
+                    List<String> risposte = List.of(risposteUnite.split(", "));
+                    System.out.println("Quante sono le risposte corrette: ");
+                    int nuemroRisposteCorrette = s.nextInt();
+                    s.nextLine();
+                    if (nuemroRisposteCorrette == 1) {
+                        System.out.println("Scrivi la risposta corretta: ");
+                        String rispostaCorretta = s.nextLine();
+                        d = new DomandaSingolaRispostaCorretta(domanda, risposte, rispostaCorretta);
+                        domande.add(d);
+                    } else if (nuemroRisposteCorrette > 1) {
+                        System.out.println("Scrivi le risposte corrette (separa con la virgola): ");
+                        List<String> risposteCorrette = List.of(s.nextLine().split(", "));
+                        d = new DomdandaPiuRisposteCorrette(domanda, risposte, risposteCorrette);
+                        domande.add(d);
+                    } else {
+                        System.out.println("Questo numero non è valido riprova");
+                    }
+                    System.out.println("Vuoi aggiungere un altra domanda?");
+                    String r = s.nextLine();
+                    if (r.equalsIgnoreCase("no")) {
+                        break;
+                    }
                 }
-            }
-        } else if (risposta == 2) {
-            //TODO implement logic to drop a question here
-        } else if (risposta == 3) {
-            for (Domanda d : domande) {
-                System.out.println("Ecco tutte le domande con le relative risposte: ");
-                d.visualizzaDomanda();
-            }
-        } else if (risposta == 4) {
-            int punteggioTotale = 0;
-            for (Domanda d : domande) {
-                System.out.println("Ecco la domanda: ");
-                d.visualizzaDomanda();
-                System.out.println("Risposta (se più di una separare con la virgola): ");
-                List<String> risposteDate = List.of(s.nextLine().split(", "));
-                d.setRisposteDate(risposteDate);
+            } else if (risposta == 2) {
+                //TODO implement logic to drop a question here
+            } else if (risposta == 3) {
+                for (Domanda d : domande) {
+                    System.out.println("Ecco tutte le domande con le relative risposte: ");
+                    d.visualizzaDomanda();
+                }
+            } else if (risposta == 4) {
+                int punteggioTotale = 0;
+                for (Domanda d : domande) {
+                    System.out.println("Ecco la domanda: ");
+                    d.visualizzaDomanda();
+                    System.out.println("Risposta (se più di una separare con la virgola): ");
+                    List<String> risposteDate = List.of(s.nextLine().split(", "));
+                    d.setRisposteDate(risposteDate);
+                }
+            } else if (risposta == 5) {
+                break;
             }
         }
     }
