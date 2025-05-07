@@ -1,20 +1,30 @@
 package org.julie.progetto.modulo320.QuizGame;
 
-import java.util.ArrayList;
-import java.util.List;
+public class DomandaVeroFalso implements Valutabile {
 
-public class DomandaVeroFalso extends Domanda {
-
+    private String domanda;
+    private enum risposte {Vero, Falso}
     private String rispostaCorretta;
 
     public DomandaVeroFalso(String domanda, String rispostaCorretta) {
-        super(domanda, new ArrayList<>((List.of("Vero", "Falso"))));
+        this.domanda = domanda;
         this.rispostaCorretta = rispostaCorretta;
+    }
+
+    public void visualizzaDomanda() {
+        System.out.println(domanda);
+        System.out.println(risposte.Vero);
+        System.out.println(risposte.Falso);
     }
 
     @Override
     public int valuta() {
-        return 0;
+        if (this.rispostaCorretta.equals(risposte.Vero.toString())) {
+            return 1;
+        } else if (this.rispostaCorretta.equals(risposte.Falso.toString())) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
-
 }
