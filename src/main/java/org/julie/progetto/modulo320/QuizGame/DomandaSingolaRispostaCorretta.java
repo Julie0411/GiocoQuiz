@@ -26,4 +26,5 @@ public class DomandaSingolaRispostaCorretta extends Domanda {
         }
         return punteggio;
     }
+
 }

@@ -15,6 +15,7 @@ public abstract class Domanda implements Valutabile {
         this.risposte = risposte;
     }
 
+    @Override
     public void visualizzaDomanda() {
         System.out.println(domanda);
         for (int i = 0; i < risposte.size()-1; i++) {
@@ -22,12 +23,19 @@ public abstract class Domanda implements Valutabile {
         }
     }
 
+    @Override
     public List<String> getRisposteDate() {
         return risposteDate;
     }
 
+    @Override
     public void setRisposteDate(List<String> risposteDate) {
         this.risposteDate = risposteDate;
+    }
+
+    @Override
+    public String getDomanda() {
+        return this.domanda;
     }
 
 }

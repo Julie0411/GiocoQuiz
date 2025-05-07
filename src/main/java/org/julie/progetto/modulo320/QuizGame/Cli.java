@@ -7,8 +7,7 @@ import java.util.Scanner;
 public class Cli {
     public static void main(String[] args) {
 
-        List<Domanda> domande = new ArrayList<>();
-
+        List<Valutabile> domande = new ArrayList<>();
         Scanner s = new Scanner(System.in);
 
         for (;;) {
@@ -23,7 +22,7 @@ public class Cli {
             s.nextLine();
             if (risposta == 1) {
                 for (;;) {
-                    Domanda d;
+                    Valutabile d;
                     System.out.println("Scrivi la domanda: ");
                     String domanda = s.nextLine();
                     System.out.println("Scrivi due o più risposte (separa con la virgola): ");
@@ -52,21 +51,25 @@ public class Cli {
                     }
                 }
             } else if (risposta == 2) {
-                //TODO implement logic to drop a question here
+                System.out.println("Scrivi la domanda da eliminare:");
+                String domanda = s.nextLine();
+                domande.removeIf(d -> domanda.equals(d.getDomanda()));
             } else if (risposta == 3) {
-                for (Domanda d : domande) {
+                for (Valutabile d : domande) {
                     System.out.println("Ecco tutte le domande con le relative risposte: ");
                     d.visualizzaDomanda();
                 }
             } else if (risposta == 4) {
                 int punteggioTotale = 0;
-                for (Domanda d : domande) {
+                for (Valutabile d : domande) {
                     System.out.println("Ecco la domanda: ");
                     d.visualizzaDomanda();
                     System.out.println("Risposta (se più di una separare con la virgola): ");
                     List<String> risposteDate = List.of(s.nextLine().split(", "));
                     d.setRisposteDate(risposteDate);
+                    punteggioTotale += d.valuta();
                 }
+                System.out.println("Hai fatto " + punteggioTotale + " punti.");
             } else if (risposta == 5) {
                 break;
             } else {

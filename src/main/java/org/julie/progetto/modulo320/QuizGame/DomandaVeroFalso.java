@@ -1,12 +1,17 @@
 package org.julie.progetto.modulo320.QuizGame;
 
+import java.util.List;
+
 public class DomandaVeroFalso implements Valutabile {
 
     private String domanda;
     private enum risposte {Vero, Falso}
     private String rispostaCorretta;
+    private List<String> risposteDate;
 
     public DomandaVeroFalso(String domanda, String rispostaCorretta) {
+        if (domanda == null) throw new IllegalArgumentException("Devi passare una domanda!");
+        if (rispostaCorretta == null) throw new IllegalArgumentException("Devi passare una risposta corretta!");
         this.domanda = domanda;
         this.rispostaCorretta = rispostaCorretta;
     }
@@ -18,13 +23,29 @@ public class DomandaVeroFalso implements Valutabile {
     }
 
     @Override
+    public List<String> getRisposteDate() {
+        return risposteDate;
+    }
+
+    @Override
+    public void setRisposteDate(List<String> risposteDate) {
+        this.risposteDate = risposteDate;
+    }
+
+    @Override
+    public String getDomanda() {
+        return this.domanda;
+    }
+
+    @Override
     public int valuta() {
-        if (this.rispostaCorretta.equals(risposte.Vero.toString())) {
-            return 1;
-        } else if (this.rispostaCorretta.equals(risposte.Falso.toString())) {
-            return 1;
-        } else {
-            return 0;
+        int punti = 0;
+        for (String r : getRisposteDate()) {
+            if (r.equals(rispostaCorretta)) {
+                punti += 1;
+                break;
+            }
         }
+        return punti;
     }
 }
