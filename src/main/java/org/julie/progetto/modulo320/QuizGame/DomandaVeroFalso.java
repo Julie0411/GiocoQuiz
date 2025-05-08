@@ -1,44 +1,21 @@
-package org.julie.progetto.modulo320.QuizGame;
+package org.julie.progetto.modulo320.quizGame;
 
 import java.util.List;
+import java.util.Set;
 
-public class DomandaVeroFalso implements Valutabile {
+public class DomandaVeroFalso extends Domanda {
 
-    private String domanda;
-    private enum risposte {Vero, Falso}
     private String rispostaCorretta;
-    private List<String> risposteDate;
 
     public DomandaVeroFalso(String domanda, String rispostaCorretta) {
-        if (domanda == null) throw new IllegalArgumentException("Devi passare una domanda!");
+        super(domanda, Set.of("Vero", "Falso"));
         if (rispostaCorretta == null) throw new IllegalArgumentException("Devi passare una risposta corretta!");
-        this.domanda = domanda;
+        if (!(rispostaCorretta.equalsIgnoreCase("Vero") || rispostaCorretta.equalsIgnoreCase("Falso"))) throw new IllegalArgumentException("La risposta corretta deve essere o vero o falso!");
         this.rispostaCorretta = rispostaCorretta;
     }
 
-    public void visualizzaDomanda() {
-        System.out.println(domanda);
-        System.out.println(risposte.Vero);
-        System.out.println(risposte.Falso);
-    }
-
     @Override
-    public List<String> getRisposteDate() {
-        return risposteDate;
-    }
-
-    @Override
-    public void setRisposteDate(List<String> risposteDate) {
-        this.risposteDate = risposteDate;
-    }
-
-    @Override
-    public String getDomanda() {
-        return this.domanda;
-    }
-
-    @Override
-    public int valuta() {
+    public float valuta() {
         int punti = 0;
         for (String r : getRisposteDate()) {
             if (r.equals(rispostaCorretta)) {
@@ -48,4 +25,5 @@ public class DomandaVeroFalso implements Valutabile {
         }
         return punti;
     }
+
 }

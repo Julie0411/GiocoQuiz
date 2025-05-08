@@ -1,41 +1,50 @@
-package org.julie.progetto.modulo320.QuizGame;
+package org.julie.progetto.modulo320.quizGame;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+import java.util.Set;
 
 public abstract class Domanda implements Valutabile {
 
     private String domanda;
-    private List<String> risposte;
-    private List<String> risposteDate;
+    private Set<String> rispostePossibili;
+    private Set<String> risposteDate;
 
-    public Domanda(String domanda, List<String> risposte) {
+    public Domanda(String domanda, Set<String> rispostePossibili) {
         if (domanda == null) throw new IllegalArgumentException("Devi passare una domanda!");
-        if (risposte == null) throw new IllegalArgumentException("Devi passare delle risposte!");
+        if (rispostePossibili == null) throw new IllegalArgumentException("Devi passare delle risposte!");
         this.domanda = domanda;
-        this.risposte = risposte;
+        this.rispostePossibili = rispostePossibili;
     }
 
-    @Override
     public void visualizzaDomanda() {
         System.out.println(domanda);
-        for (int i = 0; i < risposte.size()-1; i++) {
-            System.out.println(i+1 + ": " + risposte.get(i));
+        for (String s : rispostePossibili) {
+            System.out.println(s);
         }
     }
 
-    @Override
-    public List<String> getRisposteDate() {
+    public static float arrotonda(float numero, int numeriDopoLaVirgola) {
+        BigDecimal bigDecimal = new BigDecimal(numero);
+        bigDecimal = bigDecimal.setScale(numeriDopoLaVirgola, RoundingMode.HALF_DOWN);
+        return (float) bigDecimal.doubleValue();
+    }
+
+    public Set<String> getRisposteDate() {
         return risposteDate;
     }
 
-    @Override
-    public void setRisposteDate(List<String> risposteDate) {
+    public void setRisposteDate(Set<String> risposteDate) {
         this.risposteDate = risposteDate;
     }
 
-    @Override
     public String getDomanda() {
         return this.domanda;
+    }
+
+    public int getNumeroRisposte() {
+        return rispostePossibili.size();
     }
 
 }
