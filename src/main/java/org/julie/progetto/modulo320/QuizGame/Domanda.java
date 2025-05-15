@@ -32,7 +32,6 @@ public abstract class Domanda implements Valutabile {
 
     /**
      * Costruisce una nuova istanza della classe {@code Domanda}.
-     *
      * @param domanda La domanda sotto forma di stringa. Non può essere null o vuota.
      * @param rispostePossibili L'insieme delle risposte possibili, non può essere null.
      * @param risposteCorrette L'insieme delle risposte corrette, non può essere null o vuoto.
@@ -42,7 +41,7 @@ public abstract class Domanda implements Valutabile {
         if (domanda == null || domanda.isEmpty()) throw new IllegalArgumentException("Devi passare una domanda!");
         if (rispostePossibili == null || rispostePossibili.isEmpty()) throw new IllegalArgumentException("Devi passare delle risposte!");
         if (risposteCorrette == null || risposteCorrette.isEmpty()) throw new IllegalArgumentException("Devi passare una risposta corretta!");
-        if (!(ignoreCase(rispostePossibili).containsAll(ignoreCase(risposteCorrette)))) throw new IllegalArgumentException("La risposta deve essere presente nelle risposte possibili!");
+        if (!(toLowerCase(rispostePossibili).containsAll(toLowerCase(risposteCorrette)))) throw new IllegalArgumentException("La risposta deve essere presente nelle risposte possibili!");
         if (categoria == null) throw new IllegalArgumentException("Devi passare un argomento!");
         //TODO: E' lecito avere una domanda con zero risposte possibili?
         //TODO: E' lecito avere una domanda che sia una stringa vuota?
@@ -76,7 +75,6 @@ public abstract class Domanda implements Valutabile {
 
     /**
      * Restituisce il numero passato come parametro arrotondato al numero di decimali specificato.
-     *
      * @param numero il numero da arrotondare
      * @param numeriDopoLaVirgola il numero di cifre decimali desiderato
      * @return il numero arrotondato con il numero di decimali specificato
@@ -90,7 +88,12 @@ public abstract class Domanda implements Valutabile {
         return (float) bigDecimal.doubleValue();
     }
 
-    static Set<String> ignoreCase(Set<String> setIniziale) {
+    /**
+     * Riceve un set di stringhe e le mette tutte a lowercase
+     * @param setIniziale - il set con le stringe da convertire
+     * @return il set con tutte le stringe messe a lowercase
+     */
+    static Set<String> toLowerCase(Set<String> setIniziale) {
         if (setIniziale == null || setIniziale.isEmpty()) throw new IllegalArgumentException(("Devi passare un set popolato!"));
         Set<String> setFinale = new HashSet<>();
         for (String s : setIniziale) {
@@ -104,15 +107,14 @@ public abstract class Domanda implements Valutabile {
      * Ogni risposta corretta aggiunge 1 punto. Le risposte errate sottraggono un
      * punteggio proporzionale al numero totale di risposte possibili meno uno.
      * Il punteggio finale viene arrotondato a due decimali.
-     *
      * @return il punteggio calcolato tra 0 e il numero di risposte corrette
      */
     @Override
     public float valuta() {
         float punteggio = 0;
         float punteggioErrore = (float) 1.0 /(rispostePossibili.size()-1);
-        for (String rD : ignoreCase(this.risposteDate)) {
-            for (String rC : ignoreCase(this.risposteCorrette)) {
+        for (String rD : toLowerCase(this.risposteDate)) {
+            for (String rC : toLowerCase(this.risposteCorrette)) {
                 if (rD.equals(rC)) {
                     punteggio++;
                 } else {
@@ -130,10 +132,8 @@ public abstract class Domanda implements Valutabile {
 
     /**
      * Imposta le risposte date dall'utente.
-     *
      * @param risposteDate un set contenente le risposte fornite dall'utente
      */
-
     // TODO: questa classe rappresenta una risposta "chiusa", ovvero una domanda in cui l'utente puo' scegliere
     // una o piú risposte tra un set di risposte disponibili.
     // in questo momento la tua classe permette di scegliere risposte esterne al set di risposte possibili. La cosa
@@ -141,25 +141,21 @@ public abstract class Domanda implements Valutabile {
     // perchè secondo te ha senso.
     // Lo uso nei test e nella cli per assegnare il valore, ho aggiungo un controllo per vedere se sono risposte valide
     public void setRisposteDate(Set<String> risposteDate) {
-        if (!(ignoreCase(rispostePossibili).containsAll(ignoreCase(risposteDate)))) throw new IllegalArgumentException("Assicurati di dare solo risposte che sono valide!");
+        if (!(toLowerCase(rispostePossibili).containsAll(toLowerCase(risposteDate)))) throw new IllegalArgumentException("Assicurati di dare solo risposte che sono valide!");
         this.risposteDate = risposteDate;
 
     }
 
     /**
      * Restituisce il testo della domanda.
-     *
      * @return la domanda come stringa
      */
-
-    // TODO: ti serve?
     public String getDomanda() {
         return this.domanda;
     }
 
     /**
      * Restituisce la categoria della domanda.
-     *
      * @return la categoria come stringa
      */
     public String getCategoria() {

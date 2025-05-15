@@ -6,7 +6,6 @@ import java.util.*;
  * Questa è la cli(command line interface) e serve per far interfacciare l'utente con il programma.
  * */
 
-
 public class Cli {
     public static void main(String[] args) {
 
@@ -37,15 +36,7 @@ public class Cli {
                         String rispostaCorretta = s.nextLine();
                         System.out.println("Di che categoria è la domanda?");
                         String categoria = "";
-                        if (categorie.isEmpty()) {
-                            categoria = s.nextLine();
-                            categorie.add(categoria);
-                        } else {
-                            List<String> listaCatTemp = new ArrayList<>();
-                            int i = 1;
-                            System.out.println("Le categorie che sono già state usate sono:");
-                            int cat = getCategorie(categorie, s, listaCatTemp, i);
-                        }
+                        categoria = aggiungiOScegliCategoria(categorie, s);
                         d = new DomandaVeroFalso(domanda, rispostaCorretta, categoria);
                         domande.add(d);
                     } else if (tipoDomanda == 2) {
@@ -59,16 +50,8 @@ public class Cli {
                         System.out.println("Scrivi le risposte corrette (separa con la virgola): ");
                         Set<String> risposteCorrette = Set.of(s.nextLine().split(", "));
                         System.out.println("Di che categoria è la domanda?");
-                        String categoria = "";
-                        if (categorie.isEmpty()) {
-                            categoria = s.nextLine();
-                            categorie.add(categoria);
-                        } else {
-                            List<String> listaCatTemp = new ArrayList<>();
-                            int i = 1;
-                            System.out.println("Le categorie che sono già state usate sono:");
-                            int cat = getCategorie(categorie, s, listaCatTemp, i);
-                        }
+                        String categoria;
+                        categoria = aggiungiOScegliCategoria(categorie, s);
                         d = new DomandaRispostaMultipla(domanda, rispostePossibili, risposteCorrette, categoria);
                         domande.add(d);
                     } else {
@@ -94,14 +77,19 @@ public class Cli {
                 List<String> listaCatTemp = new ArrayList<>();
                 int i = 1;
                 int cat;
+                cat = selezionaCategoria(categorie, s, listaCatTemp, i);
                 System.out.println("Ecco le categorie di domande");
-                cat = getCategorie(categorie, s, listaCatTemp, i);
                 for (Domanda d : domande) {
                     if (d.getCategoria().equals(listaCatTemp.get(cat))) {
                         System.out.println("Ecco la domanda: ");
                         System.out.println(d.visualizzaDomanda());
                         System.out.println("Risposta (se più di una separare con la virgola): ");
-                        Set<String> risposteDate = Set.of(s.nextLine().split(", "));
+                        Set<String> risposteDate = new HashSet<>(Set.of(s.nextLine().split(", ")));
+                        for (String r : risposteDate) {
+                            risposteDate.remove(r);
+                            r = r.replace("[", "").replace("]", "");
+                            risposteDate.add(r);
+                        }
                         d.setRisposteDate(risposteDate);
                         punteggioTotale += d.valuta();
                     }
@@ -112,21 +100,42 @@ public class Cli {
             } else {
                 System.out.println("Numero non valido, riprova");
             }
-
         }
     }
 
-    private static int getCategorie(Set<String> categorie, Scanner s, List<String> listaCatTemp, int i) {
-        int cat;
-        for (String c : categorie) {
-            listaCatTemp.add(c);
-            System.out.println(i + ": c");
-            i++;
+    private static String aggiungiOScegliCategoria(Set<String> categorie, Scanner s) {
+        String categoria;
+        if (categorie.isEmpty()) {
+            categoria = s.nextLine();
+            categorie.add(categoria);
+        } else {
+            System.out.println("Ecco le categorie che esistono già:");
+            for (String c : categorie)  {
+                System.out.println(c);
+            }
+            System.out.println("Scrivi quella che vuoi usare (puoi anche aggiungerne una nuova)");
+            categoria = s.nextLine();
+            categorie.add(categoria);
         }
-        System.out.println("Inserisci il numero della categoria: ");
-        cat = s.nextInt();
-        s.nextLine();
-        categorie.add(listaCatTemp.get(cat));
-        return cat;
+        return categoria;
+    }
+
+    private static int selezionaCategoria(Set<String> categorie, Scanner s, List<String> listaCatTemp, int i) {
+        int cat;
+        if (!(categorie.isEmpty())) {
+            for (String c : categorie) {
+                listaCatTemp.add(c);
+                System.out.println(i + ": c");
+                i++;
+            }
+            System.out.println("Inserisci il numero della categoria: ");
+            cat = s.nextInt()-1;
+            s.nextLine();
+            categorie.add(listaCatTemp.get(cat));
+            return cat;
+        } else {
+            System.out.println("Non ci sono domande!");
+            return 0;
+        }
     }
 }

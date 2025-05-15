@@ -20,40 +20,10 @@ public class DomandaRispostaMultipla extends Domanda {
      * @see Domanda
      */
     public DomandaRispostaMultipla(String domanda, Set<String> rispostePossibili, Set<String> risposteCorrette, String categoria) {
-        super(domanda, ignoreCase(rispostePossibili), ignoreCase(risposteCorrette), categoria);
+        super(domanda, toLowerCase(rispostePossibili), toLowerCase(risposteCorrette), categoria);
         // TODO: sposta questo controllo nella classe Domanda.
         // TODO: qui hai creato un nuovo set, e hai copiato dentro tutte le stringhe. Nella classe Domanda invece hai assegnato
         // la reference passata esternamente. Perchè questa differenza?
     }
-
-    /**
-     * Valuta le risposte date e calcola il punteggio ottenuto.
-     * Ogni risposta corretta aggiunge 1 punto. Le risposte errate sottraggono un
-     * punteggio proporzionale al numero totale di risposte possibili meno uno.
-     * Il punteggio finale viene arrotondato a due decimali.
-     *
-     * @return il punteggio calcolato tra 0 e il numero di risposte corrette
-     */
-//    @Override
-    // TODO: puoi portare nella classe Domanda questa implementazione.
-//    public float valuta() {
-//        float punteggio = 0;
-//        float punteggioErrore = (float) 1.0 /(getNumeroRisposte()-1);
-//        for (String rD : getRisposteDate()) {
-//            for (String rC : risposteCorrette) {
-//                if (rD.equals(rC)) {
-//                    punteggio++;
-//                } else {
-//                    // TODO: non capisco questo if. O meglio, ne capisco l'intenzione (non andare in negativo)... ma
-//                    // non minimizza i WTF/min.
-//                    if ((punteggio - punteggioErrore) >= punteggioErrore) {
-//                        punteggio -= punteggioErrore;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return arrotonda(punteggio, 2);
-//    }
 
 }
