@@ -21,6 +21,11 @@ public class TestDomandaVeroFalso {
     }
 
     @Test
+    public void test_domanda_vero_falso_se_passo_una_risposta_che_non_e_prevista_deve_lanciare_errore() {
+        assertThrows(IllegalArgumentException.class, ()-> {new DomandaVeroFalso("Il cielo è azzurro?", "ciao", "Chimica");});
+    }
+
+    @Test
     public void test_domanda_vero_falso_se_passo_un_argomento_nullo_deve_lanciare_errore() {
         assertThrows(IllegalArgumentException.class, ()-> {new DomandaVeroFalso("Il cielo è azzurro?", "vero", null);});
     }
