@@ -1,7 +1,5 @@
 package org.julie.progetto.modulo320.quizGame;
 
-import java.util.HashSet;
-
 import java.util.Set;
 
 /**
@@ -20,7 +18,7 @@ public class DomandaRispostaMultipla extends Domanda {
      * @see Domanda
      */
     public DomandaRispostaMultipla(String domanda, Set<String> rispostePossibili, Set<String> risposteCorrette, String categoria) {
-        super(domanda, toLowerCase(rispostePossibili), toLowerCase(risposteCorrette), categoria);
+        super(domanda, rispostePossibili, risposteCorrette, categoria);
         // TODO: sposta questo controllo nella classe Domanda.
         // TODO: qui hai creato un nuovo set, e hai copiato dentro tutte le stringhe. Nella classe Domanda invece hai assegnato
         // la reference passata esternamente. Perchè questa differenza?

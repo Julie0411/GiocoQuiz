@@ -38,11 +38,13 @@ public abstract class Domanda implements Valutabile {
      * @throws IllegalArgumentException Se uno dei parametri è null o se la domanda è vuota.
      */
     public Domanda(String domanda, Set<String> rispostePossibili, Set<String> risposteCorrette, String categoria) {
-        if (domanda == null || domanda.isEmpty()) throw new IllegalArgumentException("Devi passare una domanda!");
+        if (domanda == null || domanda.isEmpty()) throw new IllegalArgumentException("La domanda non può essere vuota!");
         if (rispostePossibili == null || rispostePossibili.isEmpty()) throw new IllegalArgumentException("Devi passare delle risposte!");
         if (risposteCorrette == null || risposteCorrette.isEmpty()) throw new IllegalArgumentException("Devi passare una risposta corretta!");
-        if (!(toLowerCase(rispostePossibili).containsAll(toLowerCase(risposteCorrette)))) throw new IllegalArgumentException("La risposta deve essere presente nelle risposte possibili!");
-        if (categoria == null) throw new IllegalArgumentException("Devi passare un argomento!");
+        rispostePossibili = toLowerCase(rispostePossibili);
+        risposteCorrette = toLowerCase(risposteCorrette);
+        if (!rispostePossibili.containsAll(risposteCorrette)) throw new IllegalArgumentException("La risposta corretta deve essere tra quelle possibili!");
+        if (categoria == null || categoria.trim().isEmpty()) throw new IllegalArgumentException("Categoria non può essere vuota!");
         //TODO: E' lecito avere una domanda con zero risposte possibili?
         //TODO: E' lecito avere una domanda che sia una stringa vuota?
         this.domanda = domanda;
@@ -120,14 +122,11 @@ public abstract class Domanda implements Valutabile {
                 } else {
                     // TODO: non capisco questo if. O meglio, ne capisco l'intenzione (non andare in negativo)... ma
                     // non minimizza i WTF/min. Non saprei come sostituire questo controllo
-                    if ((punteggio - punteggioErrore) >= punteggioErrore) {
-                        punteggio -= punteggioErrore;
-                    }
+                    punteggio -= punteggioErrore;
                 }
             }
         }
-
-        return arrotonda(punteggio, 2);
+        return arrotonda(Math.max(0, punteggio), 2);
     }
 
     /**
