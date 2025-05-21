@@ -13,7 +13,6 @@ Principi OOP: Incapsulamento, ereditarietà e poliformismo.
 Test: test scitti in JUnit per verificare il funzionamento delle classi e dei metodi.  
 Gestione delle dipendenza: Maven
 
-
 ### Difficoltà incontrate
 All’inizio ho trovato difficile capire cosa fare esattamente. 
 La consegna era volutamente generica per lasciare libertà di scelta, 
