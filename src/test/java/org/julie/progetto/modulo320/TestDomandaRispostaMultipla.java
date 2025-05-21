@@ -1,6 +1,6 @@
 package org.julie.progetto.modulo320;
 
-import org.julie.progetto.modulo320.quizGame.DomandaRispostaMultipla;
+import org.julie.progetto.modulo320.QuizGame.DomandaRispostaMultipla;
 import org.testng.annotations.Test;
 
 import java.util.Set;

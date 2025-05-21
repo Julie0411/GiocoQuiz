@@ -1,6 +1,6 @@
 package org.julie.progetto.modulo320;
 
-import org.julie.progetto.modulo320.quizGame.DomandaVeroFalso;
+import org.julie.progetto.modulo320.QuizGame.DomandaVeroFalso;
 import org.testng.annotations.Test;
 
 import java.util.Set;
