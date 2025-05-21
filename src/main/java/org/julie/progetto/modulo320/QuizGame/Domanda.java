@@ -1,4 +1,4 @@
-package org.julie.progetto.modulo320.quizGame;
+package org.julie.progetto.modulo320.QuizGame;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -20,7 +20,6 @@ import java.util.Set;
  * sulla correttezza e sulla penalizzazione delle risposte errate.
  * @see Valutabile
  */
-// TODO: mancano Javadoc sulla classe e sul costruttore.
 public abstract class Domanda implements Valutabile {
 
     private String domanda;
@@ -41,12 +40,10 @@ public abstract class Domanda implements Valutabile {
         if (domanda == null || domanda.isEmpty()) throw new IllegalArgumentException("La domanda non può essere vuota!");
         if (rispostePossibili == null || rispostePossibili.isEmpty()) throw new IllegalArgumentException("Devi passare delle risposte!");
         if (risposteCorrette == null || risposteCorrette.isEmpty()) throw new IllegalArgumentException("Devi passare una risposta corretta!");
-        rispostePossibili = toLowerCase(rispostePossibili);
-        risposteCorrette = toLowerCase(risposteCorrette);
+        rispostePossibili = separaRisposte(toLowerCase(rispostePossibili));
+        risposteCorrette = separaRisposte(toLowerCase(risposteCorrette));
         if (!rispostePossibili.containsAll(risposteCorrette)) throw new IllegalArgumentException("La risposta corretta deve essere tra quelle possibili!");
         if (categoria == null || categoria.trim().isEmpty()) throw new IllegalArgumentException("Categoria non può essere vuota!");
-        //TODO: E' lecito avere una domanda con zero risposte possibili?
-        //TODO: E' lecito avere una domanda che sia una stringa vuota?
         this.domanda = domanda;
         this.rispostePossibili = rispostePossibili;
         this.risposteCorrette = risposteCorrette;
@@ -55,13 +52,8 @@ public abstract class Domanda implements Valutabile {
     }
 
     /**
-     * Visualizza la domanda e tutte le risposte possibili sulla console.
+     * @return una string contenente la domanda e le risposte
      */
-    /* TODO: sarebbe meglio che questo metodo restituisse una stringa e delegare al chiamante la responsabilità.
-    * Immagina ad esempio di voler inviare ad una stampante l'output invece di volerlo stampare a video...
-    * di scrivere su console (oppure altrove). Alternativamente, puoi mettere l'outputstream come parametro d'ingresso
-    * al metodo.
-    */
     public String visualizzaDomanda() {
         int i = 0;
         StringBuilder risposte = new StringBuilder();
@@ -81,9 +73,7 @@ public abstract class Domanda implements Valutabile {
      * @param numeriDopoLaVirgola il numero di cifre decimali desiderato
      * @return il numero arrotondato con il numero di decimali specificato
      */
-    // TODO: perchè questo metodo è pubblico? Perché sono andata di default senza pensare
     private static float arrotonda(float numero, int numeriDopoLaVirgola) {
-        // TODO: cosa succede se ti mando un "numeriDopoLaVirgola" negativo? Ora viene Gestito
         if (numeriDopoLaVirgola < 0) throw new IllegalArgumentException("Devi passare un numero positivo! ");
         BigDecimal bigDecimal = new BigDecimal(numero);
         bigDecimal = bigDecimal.setScale(numeriDopoLaVirgola, RoundingMode.HALF_DOWN);
@@ -105,6 +95,22 @@ public abstract class Domanda implements Valutabile {
     }
 
     /**
+     * Riceve un set di stringhe che è composto da una stringa e separa le varie risposte
+     * @param setIniziale - il set con le stringe da separare
+     * @return il set con tutte le stringe separate
+     */
+    static Set<String> separaRisposte(Set<String> setIniziale) {
+        Set<String> setFinale = new HashSet<>();
+        for (String s : setIniziale) {
+            Set<String> setIntermedio = Set.of(s.split(","));
+            for (String str : setIntermedio) {
+                setFinale.add(str.trim());
+            }
+        }
+        return setFinale;
+    }
+
+    /**
      * Valuta le risposte date e calcola il punteggio ottenuto.
      * Ogni risposta corretta aggiunge 1 punto. Le risposte errate sottraggono un
      * punteggio proporzionale al numero totale di risposte possibili meno uno.
@@ -120,8 +126,6 @@ public abstract class Domanda implements Valutabile {
                 if (rD.equals(rC)) {
                     punteggio++;
                 } else {
-                    // TODO: non capisco questo if. O meglio, ne capisco l'intenzione (non andare in negativo)... ma
-                    // non minimizza i WTF/min. Non saprei come sostituire questo controllo
                     punteggio -= punteggioErrore;
                 }
             }
@@ -133,24 +137,10 @@ public abstract class Domanda implements Valutabile {
      * Imposta le risposte date dall'utente.
      * @param risposteDate un set contenente le risposte fornite dall'utente
      */
-    // TODO: questa classe rappresenta una risposta "chiusa", ovvero una domanda in cui l'utente puo' scegliere
-    // una o piú risposte tra un set di risposte disponibili.
-    // in questo momento la tua classe permette di scegliere risposte esterne al set di risposte possibili. La cosa
-    // genera un elevato numero di WTF/min. Sei sicura di volere questo comportamento? Se si, devi documentarlo e documentare
-    // perchè secondo te ha senso.
-    // Lo uso nei test e nella cli per assegnare il valore, ho aggiungo un controllo per vedere se sono risposte valide
     public void setRisposteDate(Set<String> risposteDate) {
         if (!(toLowerCase(rispostePossibili).containsAll(toLowerCase(risposteDate)))) throw new IllegalArgumentException("Assicurati di dare solo risposte che sono valide!");
         this.risposteDate = risposteDate;
 
-    }
-
-    /**
-     * Restituisce il testo della domanda.
-     * @return la domanda come stringa
-     */
-    public String getDomanda() {
-        return this.domanda;
     }
 
     /**

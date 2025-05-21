@@ -1,11 +1,10 @@
-package org.julie.progetto.modulo320.quizGame;
+package org.julie.progetto.modulo320.QuizGame;
 
 import java.util.*;
 
 /**
  * Questa è la cli(command line interface) e serve per far interfacciare l'utente con il programma.
- * */
-
+ */
 public class Cli {
     public static void main(String[] args) {
 
@@ -44,7 +43,6 @@ public class Cli {
                         System.out.println("Scrivi la domanda: ");
                         String domanda = s.nextLine();
                         System.out.println("Scrivi due o più risposte (separa con la virgola): ");
-                        String risposteUnite = s.nextLine();
                         Set<String> rispostePossibili = new HashSet<>();
                         Set<String> rispostePossibiliConSpazi = new HashSet<>(Set.of(s.nextLine().split(", ")));
                         for (String rC: rispostePossibiliConSpazi) {
