@@ -1,12 +1,9 @@
 package org.julie.progetto.modulo320;
-
 import org.julie.progetto.modulo320.QuizGame.DomandaRispostaMultipla;
 import org.testng.annotations.Test;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestDomandaRispostaMultipla {
 
@@ -45,7 +42,7 @@ public class TestDomandaRispostaMultipla {
         DomandaRispostaMultipla domanda = new DomandaRispostaMultipla("domanda di prova", Set.of("a", "b", "c", "d"), Set.of("c"), "Latino");
         Set<String> risposteDate = Set.of("d");
         domanda.setRisposteDate(risposteDate);
-        assertEquals(0.0f, domanda.valuta());
+        assertEquals(0.0f, domanda.valuta(), 0.0);
     }
 
     @Test
@@ -69,7 +66,7 @@ public class TestDomandaRispostaMultipla {
         DomandaRispostaMultipla domanda = new DomandaRispostaMultipla("domanda di prova", Set.of("a", "b", "c", "d"), Set.of("c"), "Tedesco");
         Set<String> risposteDate = Set.of("c");
         domanda.setRisposteDate(risposteDate);
-        assertEquals(1.0f, domanda.valuta());
+        assertEquals(1.0f, domanda.valuta(), 0.0);
     }
 
 }

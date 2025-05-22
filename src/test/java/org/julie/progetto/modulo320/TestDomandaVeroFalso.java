@@ -1,12 +1,9 @@
 package org.julie.progetto.modulo320;
-
 import org.julie.progetto.modulo320.QuizGame.DomandaVeroFalso;
 import org.testng.annotations.Test;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TestDomandaVeroFalso {
 
